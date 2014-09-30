@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Sample Articles
-excerpt: "An archive of articles sorted by date."
+title: 
+excerpt: "Giving us its origin, which is the sphere, and where it's going, which is the tetrahedron."
 ---
 
 <ul class="post-list">

@@ -1,8 +1,8 @@
 # Site wide configuration
 
-title: Site Title
+title: Jehosafet
 locale: en_US
-description: Describe your website here.
+description: The *-afire Explosion
 logo: site-logo.png
 search: true
 url: 
@@ -32,13 +32,13 @@ exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.
 
 # Site owner
 owner:
-  name: Your Name
-  avatar: bio-photo.jpg
-  email: you@email.com
+  name: Thu Jehosafet
+  avatar: bio-photo.png
+  email: mobeets@gmail.com
   disqus-shortname:
-  twitter: #username
+  twitter: jehosafet
   facebook: #username
-  github: #username
+  github: mobeets
   stackexchange: #http://stackoverflow.com/users/123456/username
   linkedin: #username
   instagram: #username
