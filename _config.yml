@@ -10,7 +10,7 @@ url: http://www.jehosafet.com/blog
 
 # Jekyll configuration
 
-permalink:   /:categories/:title/
+permalink:   /:title/
 markdown:    kramdown
 highlighter: pygments
 sass:
@@ -35,7 +35,7 @@ owner:
   name: Thu Jehosafet
   avatar: bio-photo.png
   email: mobeets@gmail.com
-  disqus-shortname: jehosafet
+  disqus-shortname: starafireexplosion
   twitter: jehosafet
   facebook: #username
   github: mobeets
