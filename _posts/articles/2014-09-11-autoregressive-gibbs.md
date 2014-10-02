@@ -42,23 +42,27 @@ __Goal__: Describe a gibbs sampler for viewing the posterior of all unknowns giv
 2. Draw X from
 \\( P(X \mid \alpha, \beta, \omega^2, \sigma^2, D_T) \\)
 
-### Step 1: AR(1) without noise ("Should be easy, right?")
+### Step 1: AR(1) without noise
 
-We want to sample from the posterior of the AR(1) without noise case, i.e. the posterior in bayesian linear regression of Y on X:
+"Should be easy, right?"
+
+Hint: We want to sample from the posterior of the AR(1) without noise case, i.e. the posterior in bayesian linear regression of Y on X:
 
 \\[ Y = X \theta + \epsilon \\]
 
-where \\( X = X\_{0:t-1} \\), \\( Y = Y\_{1:t} \\), \\( \theta = \\{ \alpha, \beta \\} \\), and \\( \epsilon \propto N(0, \omega^2 + \sigma^2) \\).
+where \\( X = X\_{0:t-1} \\), \\( Y = Y\_{1:t} \\), \\( \theta = \\{ \alpha, \beta \\} \\), and \\( \epsilon \propto N(0, \sigma^2) \\).
 
-After setting conjugate priors on your hyperparamers \\( ( \theta, \omega^2 + \sigma^2 ) \\), you will need to find the full conditional distributions and then gibbs sample to draw from the posterior:
+After setting conjugate priors on your hyperparamers \\( ( \theta, \sigma^2 ) \\), you will need to find the full conditional distributions and then gibbs sample to draw from the posterior:
 
 a.
 
-\\[ P( \theta \mid \omega^2 + \sigma^2, X, Y) \\]
+\\[ P( \theta \mid \omega^2, \sigma^2, X, Y) \\]
 
 b.
 
-\\[ P( \omega^2 + \sigma^2 \mid \theta, X, Y ) \\]
+\\[ P( \sigma^2 \mid \theta, X, Y ) \\]
+
+And then drawing for $$ \omega^2 $$ is similar.
 
 ### Step 2: FFBS
 
