@@ -15,11 +15,11 @@ You're scrolling through facebook one day when you see an ad for perfume.
 
 You keep scrolling, and then another ad comes up:
 
-![gauther-ad]({{ site.baseurl }}/images/gauthier.png)
+![gauther-ad]({{ site.url }}/images/gauthier.png)
 
 "Weird," you now say. It's not _too_ weird, but just slightly weird because you didn't think Gauthier was that common of a name. It's at least mildly surprising that there'd be enough Gauthiers in the world interested in buying t-shirts with their last names on them. You're not one of them, however, and you keep scrolling.
 
-![texas-ad]({{ site.baseurl }}/images/texas.png)
+![texas-ad]({{ site.url }}/images/texas.png)
 
 "Holy shit," you now say, because you _are_ a Texan living in Australia, and there can't be too many of those. "This is weird."
 
@@ -47,7 +47,7 @@ I thought, okay, these t-shirts don't exist--they must auto-generate the shirt d
 But it turns out that Teespring, the host of this "Australian Texan" t-shirt, is really a platform for regular old human sellers, using targeted ad campaigns to sell their yet-to-be-actually-made t-shirt designs. While automating the t-shirt design itself is surely an option, Teespring's ad campaigns seem to be created by people--people like this guy:
 
 
-![teespring-expert]({{ site.baseurl }}/images/teespring-expert.png)
+![teespring-expert]({{ site.url }}/images/teespring-expert.png)
 
 In [this post](http://teespringexpert.com/target-last-name-using-custom-audience-facebook/), Alex shows us how to use something called the "FB GRAPH SCRAPER" to show an ad to all the facebook users who fit the target demographic for the shirt he designed: those gorgeous black Gauthier tees shown above. Surely a similar process was used to target my friend Kate, the Australian Texan.[^1]
 
