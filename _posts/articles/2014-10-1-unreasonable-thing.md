@@ -43,7 +43,7 @@ Do we really need a different app for every different job? God, I hope not. Sure
 
 Basically, what I want is something that allows __{manual/scheduled} prompts + {manual/scheduled} reminders__. Such a system, paired with a good categorization system, would be general enough to replace all the above examples. Here's how some of those examples look in these terms:
 
-* Pocket/Instapaper/Readability = manual prompts ("Save this article for later.") + manual reminders ([check your app to see all the articles you saved.])
+* Pocket/Instapaper/Readability = manual prompts ("Save this article for later.") + manual reminders (check your app to see all the articles you saved.)
 * Google Calendar = manual prompts ("Dinner at Tom's") + scheduled reminders ("The event Dinner at Tom's is scheduled for tomorrow.")
 * lifelogging = manual prompts ("I just drank 1 glass of water.") + scheduled reminders ("Today you drank 8 glasses of water!")
 
