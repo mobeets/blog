@@ -54,6 +54,15 @@ We should be able to get rid of things but schedule their return, and reminder a
 I want an app that lets you set general reminders that something exists. It might be a general reminder to answer a certain question, like "What's your theme today?", or it might be something more like "Hey! You wanted to watch this movie. Remember?" Finding ways to integrate these reminders in ways that maximize the chances of you actually _doing_ whatever it was you thought you'd want to be doing is definitely a tough problem. But if you combine IFTTT's idea of triggers with intelligent reminders like spaced repetition, and apply it to basically everything, I think the world could be both fun and less tab-ridden.[^3]
 
 <hr>
+
+The main metric for such an app should be: Does it get rid of emails in inboxes, and browser tabs?
+
+The feeling it should give you: Open something. Think: Oh, this is important! And then being able to make it _completely disappear_ but without having to worry about remembering its existence. The feeling of read-it-later.
+
+The subjective experience of Pocket and _not_ of Google Calendar; the coolness of IFTTT with the functionality/practicality of iphone reminders; no more "mark as unread". No more putting your briefcase with your car keys so you can't leave without it.
+
+<hr>
+
 _Footnotes_:
 
 [^1]: Pro-tip: Never start using multiple browser windows to categorize all the tabs you have open. It's a downward spiral.
