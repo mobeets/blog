@@ -3,12 +3,6 @@ import os
 from urllib2 import quote
 
 """
-Known issues:
-    * title includes date
-    * watch out for lack of {{self.baseurl}}
-"""
-
-"""
 BIN_DIR = directory containing jekyll.tpl template
 BUILD_DIR = output directory for ipython conversions (.md and folder of any images)
 STATIC_DIR = relative url for jekyll images
