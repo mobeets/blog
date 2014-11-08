@@ -64,7 +64,6 @@ tags: [python]
 {{ cell.source | wrap_text(80) }}
 {% endblock markdowncell %}
 
-
 {% block headingcell scoped %}
 {{ '#' * cell.level }} {{ cell.source | replace('\n', ' ') }}
 {% endblock headingcell %}

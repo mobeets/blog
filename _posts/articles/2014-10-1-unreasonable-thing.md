@@ -36,6 +36,7 @@ But the problem with these things is that usually you forget to check back in! Y
 * iPhone location-based reminders: "Tell me this when I leave my house."
 * [Spaced repetition](https://www.google.com/#q=spaced+repetition+software) apps: "Tell me something whenever I'm most likely to remember it."
 * [IFTTT](https://ifttt.com/wtf): "Send me an email in the morning if there's rain in the forecast."
+* [Boomerang](http://www.boomeranggmail.com/l/email-reminders.html), [Followup](https://followup.cc/): "Don't leave emails in your inbox--make them disappear, and they'll come back to you later."
 
 ## But there are too many solutions.
 
