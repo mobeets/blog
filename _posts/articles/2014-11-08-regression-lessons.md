@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Regression lessons"
+title: "Regression tips"
 description: ""
 categories: articles
 tags: [math, neuro]
@@ -31,7 +31,7 @@ Examples:
 
 #### Use the Woodbury identity
 
-The [Woodbury identity](http://en.wikipedia.org/wiki/Woodbury_matrix_identity), aka the matrix inversion lemma, lets you avoid inverting your prior covariance matrix ($$C$$ below) during regularization.
+The [Woodbury identity](http://en.wikipedia.org/wiki/Woodbury_matrix_identity), aka the matrix inversion lemma, lets you avoid inverting certain matrices ($$C$$ below) in certain cases.
 
 Instead of calculating $$ (\frac{ X^T X}{\sigma^2} + C^{-1})^{-1} $$, do this:
 
@@ -39,6 +39,14 @@ $$ C - C(X^T E^{-1} X)C $$
 
 where $$ E = \sigma^2 I + X C X^T $$.
 
+Note, however, that inverting $$E$$ is not always any easier than inverting $$C$$. For the Woodbury identity to help, you'll probably want $$X$$ to have fewer rows than it has columns.
+
 #### Use SVD
 
-It may be that your prior covariance matrix is so big that even Woodbury can't help you. In that case, you can use a similar approach to [principal components regression](http://en.wikipedia.org/wiki/Principal_component_regression) (aka PC regression, or PCR) and use instead a rank-k approximation of your prior covariance matrix. (I'll update this part once I figure it out.)
+Sometimes the above tricks won't apply, but you still need to invert $$C$$. Then guess what else sucks? Sometimes $$C$$ will be singular, meaning it is un-invertible. In this case, you can use a similar approach to [principal components regression](http://en.wikipedia.org/wiki/Principal_component_regression) (aka PC regression, or PCR) to find a rank-k approximation of $$C$$.
+
+Let $$ C = U S V^T $$. (You can get $$U, S, V$$ from calling `svd(C)` in python or MATLAB.) $$S$$ contains your eigenvalues, and to get your rank-k approximation of $$ C $$ you will take the first $$k$$ largest eigenvalues in $$S$$ and ignore all of the others. Now, let $$U = U_k$$ be the matrix where you take the $$k$$ columns of $$U$$ corresponding to those $$k$$ largest eigenvalues. ($$U$$ will be $$n \times n$$, so $$ k < n $$.)
+
+Your rank-k approximation of $$C$$ is now $$C_k = U_k^T C U_k$$, which will be a $$k \times k$$ matrix. Hooray! Now if you have any other matrices or vectors with dimension $$n$$ you should also multiply them by $$U_k$$, or $$U_k^T$$--treat these like puzzle pieces and just play with the shapes until you turn the $$n$$ into $$k$$.
+
+Now continue to solve your problem with these new $$k$$ shaped things. Whenever you're done, convert the things with dimension $$k$$ back into dimension $$n$$ using the reverse of whatever you did before. For example, $$C = U_k C_k U_k^T$$. (This works because $$U$$ is a unitary matrix.)
