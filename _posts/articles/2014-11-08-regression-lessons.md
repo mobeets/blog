@@ -9,7 +9,7 @@ latex: true
 
 ### 1. Write unit tests.
 
-If you're writing your own regresson code, writing and regularly running [unit tests](http://en.wikipedia.org/wiki/Unit_testing) will prevent much pain in the future. Simply getting _an_ answer for your regression means nothing--you want the correct answer. Unit tests will give yourself and others evidence to believe your resulting fits, and writing them takes no time at all.
+If you're writing your own regression code, writing and regularly running [unit tests](http://en.wikipedia.org/wiki/Unit_testing) will prevent much pain in the future. Simply getting _an_ answer for your regression means nothing--you want the correct answer. Unit tests will give yourself and others evidence to believe your resulting fits, and writing them takes no time at all.
 
 ### 2. Compare models using an intuitive metric.
 

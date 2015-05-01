@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "An unreasonable thing that I want."
+title: "An unreasonable thing that I want"
 description: ""
 categories: articles
 tags: tetrahedron
