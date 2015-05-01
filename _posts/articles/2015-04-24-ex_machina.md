@@ -1,4 +1,10 @@
-# Ex Machina
+---
+layout: post
+title: "Ex Machina's femme fatale"
+description: ""
+categories: articles
+tags: [reviews]
+---
 
 From the sci-fi perspective, _Ex Machina_ was thrilling and thought-provoking. But from a feminist perspective, it's a story where the only female characters are beautiful and often nude slaves. But why?
 
@@ -19,6 +25,8 @@ Given the mass of data we put online, _Ex Machina_ suggests, it's inevitable tha
 But in real life, we are _all_ guilty of over-valuing beauty. Unfortunately, in _Ex Machina_ and others, it's the man-falls-for-femme-fatale trope that gets to tell this story. Unfortunately, _Ex Machina_ uses Ava only as an instigator of conflict; Caleb, the smart and moralistic man, is the one we relate to. We see the story from his perspective, while the femme fatale, Ava, represents only what we fear (technology, intelligence, etc.).
 
 The problem[^2] with _Ex Machina_, then, is not just its apparent suggestion of a sexist equivalence between technology and women (beautiful, functional, potentially manipulative). It's that it tells a Prometheus/Frankenstein story where the fire/monster is _a woman_. As thrilling as it is, _Ex Machina_ is business-as-usual for literature and film: A universal story (here, an encounter with artificial intelligence) told only from a man's perspective.
+
+__Footnotes__
 
 [^1]: At least most movies seem to agree that such a hyper-intelligent being will be female.
 [^2]: Well, there is one other problem with the movie: When Caleb is on Nathan's computer hacking into his security system, you'll notice that the code he writes is actually a textbook program to generate a list of prime numbers. You know how I know that? It's because they left comments _in English_ describing what the code does. You don't even need to understand code to understand "This function calculates prime numbers." It's like an actor letting his real hair stick out from under his wig. Come on, guys...This happens too [often](http://moviecode.tumblr.com/).
