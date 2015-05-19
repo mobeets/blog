@@ -17,7 +17,7 @@ body {
 		display: inline-block;
 		width: 100%;
 		vertical-align: top;
-		margin: 0 0 50px;
+		margin: 0 0 10px;		
 		padding: 4px 20px;
 		background-color: $black;
 		@include media($medium) {
@@ -120,7 +120,7 @@ body {
 // --------------------------------------------------
 
 .masthead {
-	margin-top: 40px;
+	// margin-top: 40px;
 	@include clearfix;
 	@include media($medium) {
 		margin-top: 0;
@@ -162,6 +162,8 @@ body {
 }
 .site-title {
 	margin-bottom: 0;
+	// position: absolute;
+	z-index: 10;
 	@include animation-duration(1s);
     @include animation-delay(.75s);
 	a { 
@@ -265,6 +267,18 @@ span + .entry-title {
 			border-bottom: 1px solid rgba($black,.10);
 		}
 	}
+}
+.author.vcard {
+	text-transform: none;
+	// font-family: $alt-font;
+	font-weight: 600;
+	@include font-size(16,no);
+}
+.author.dcard {
+	text-transform: none;
+	font-style: italic;
+	font-weight: 400;
+	@include font-size(14,no);
 }
 .bio-photo {
 	display: none;
@@ -430,7 +444,8 @@ span + .entry-title {
 	margin-top: 0;
 	padding-right: $gutter;
 	padding-left: $gutter;
-	height: 1px;
+	// height: 1px;
+	// z-index: 0;
 }
 
 

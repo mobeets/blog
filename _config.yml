@@ -6,7 +6,7 @@
 title: Jehosafet
 locale: en_US
 description: The *-afire Explosion
-logo: site-logo.png
+logo: bio-photo.png
 search: true
 url: http://www.jehosafet.com/blog
 
@@ -36,6 +36,7 @@ exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.
 # Site owner
 owner:
   name: Thu Jehosafet
+  description: "Giving us its origin, which is the sphere, and where it's going, which is the tetrahedron."
   avatar: bio-photo.png
   email: mobeets@gmail.com
   disqus-shortname: starafireexplosion
