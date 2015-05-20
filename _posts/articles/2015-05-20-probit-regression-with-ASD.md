@@ -55,7 +55,7 @@ where $$[y^*_i < 0]$$ and $$[y^*_i \geq 0]$$ are indicator variables specifying 
 
 But there's two parts missing! We need to know how to sample $$\rho$$ and $$\delta$$. And this is where things gets tricky. So this might not necessarily work in practice...
 
-We know that the distribution of each of $$\rho$$ and $$\delta$$ depends only on the weights, $$\beta$$, and the other hyperparameter. This distribution resembles a Gamma with unknown shape and scale parameters, $$k$$ and $$\theta$$. (Well actually, for $$\rho$$, you need to exponentiate it first to have it look like a Gamma.)
+We know that the distribution of each of $$\rho$$ and $$\delta$$ depends only on the weights, $$\beta$$, and the other hyperparameter. This distribution [resembles](https://github.com/mobeets/gaborMotionPulses/issues/44) a Gamma with unknown shape and scale parameters, $$k$$ and $$\theta$$[^1]. (Well actually, for $$\rho$$, you need to exponentiate it first to have it look like a Gamma.)
 
 $$ exp(\rho) \mid \beta, \delta \sim Gamma(k_{\rho}, \theta_{\rho}) $$
 
@@ -84,18 +84,19 @@ In Matlab this might look like:
 {% highlight matlab %}
 % given: weights (wts), smoothness hyperparameter (delta),
 %     and squared distance matrix (Delta)
-% estimating the shape and scale parameters of a Gamma distribution for rho
+% estimating the shape and scale parameters of a Gamma distribution for exp(rho)
 
 P = @(rho) mvnpdf(wts, zeros(numel(wts),1), asd.prior(rho, Delta, delta));
 
 % calculate mode of gamma
-obj = @(x) -log(P(x));
-A = fmincon(obj, rho0, [],[],[],[], -20, 20);
+obj = @(x) -log(P(x)); rho0 = 0; lb = -20; ub = 20;
+A = fmincon(obj, rho0, [],[],[],[], lb, ub);
 
 % calculate mean of gamma
-xs = linspace(-20, 20, 1e3);
-ys = arrayfun(P, xs);
-B = (xs.*ys)/sum(ys);
+rhos = linspace(lb, ub, 1e3);
+ps = arrayfun(P, rhos);
+ps = ps ./ sum(ps); % normalize
+B = (exp(rhos)*ps')/sum(ps); % exp because exp(rho) is gamma
 
 % draw a sample for rho
 theta_rho = B - A;
