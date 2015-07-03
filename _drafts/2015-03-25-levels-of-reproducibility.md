@@ -6,6 +6,10 @@ categories: articles
 tags: [open-science]
 ---
 
+## Data available upon request
+
+http://andrewgelman.com/2015/06/17/born-open-data/
+
 ## There are levels of reproducibility: can't you just choose at least one please? 
 
 Surely there is at least _some_ aspect of the code or data that you can share online. Once you've published it, at least.
