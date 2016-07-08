@@ -36,7 +36,7 @@
         {% endif %}
         <span class="author vcard"><span class="">{{ author.name }}</span></span>
         {% if page.description %}
-        <span class="author dcard"><span class="">{{ page.description }}</span></span>
+        <!--<span class="author dcard"><span class="">{{ page.description }}</span></span>-->
         {% endif %}
         {% if page.date %}
         <span class="entry-date date published"><time datetime="{{ page.date | date_to_xmlschema }}"><i class="fa fa-calendar-o"></i> {{ page.date | date: "%B %d, %Y" }}</time></span>

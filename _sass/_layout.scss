@@ -348,9 +348,17 @@ span + .entry-title {
 		@include clearfix;
 	}
 	a > span {
-		float: right;
+		// float: right;
+	}
+	.entry-tag {
+		text-transform: uppercase;
+		color: #A5A5A5;
+		@include font-size(10,no);
+		background-color: lighten($black, 90);
+		margin-right: 2px;
 	}
 	.entry-date {
+		float: right;
 		@include font-size(14,no);
 		text-transform: uppercase;
 		display: none;

@@ -3,7 +3,7 @@ layout: post
 title: "Ex Machina's femme fatale"
 description: ""
 categories: articles
-tags: [reviews]
+tags: [movies]
 ---
 
 From the sci-fi perspective, _Ex Machina_ was thrilling and thought-provoking. But from a feminist perspective, it's a story where the only female characters are beautiful and often nude slaves. But why?
