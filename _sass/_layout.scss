@@ -352,8 +352,8 @@ span + .entry-title {
 	}
 	.entry-tag {
 		text-transform: uppercase;
-		color: #A5A5A5;
-		@include font-size(10,no);
+		color: #757575;
+		@include font-size(12,no);
 		background-color: lighten($black, 90);
 		margin-right: 2px;
 	}

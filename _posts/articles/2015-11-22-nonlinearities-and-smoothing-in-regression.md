@@ -23,17 +23,15 @@ _Question_: How does $$BB^T$$ determine your set of possible solutions $$\beta$$
 
 Often, $$B$$ is written using functions, where you pick functions $$f_1, ..., f_b$$ and apply each one to the integers $$1, ..., m$$. In other words, $$B_{j,k} = f_k(j)$$, so that the $$k^{th}$$ column of $$B$$ is the response of $$f_k$$ to all numbers between $$1$$ and $$m$$.
 
-__Modeling input/output nonlinearities__
-
-...
-
-__Summary__
-
-Subspace:
+Summary:
 
 * $$B_{jk} = f_k(j)$$ for $$j = 1, ..., m$$ and $$k = 1, ..., b$$
 * $$Z = XB$$, and regress $$y$$ on $$Z$$ to get $$\omega$$
 * $$\beta = B\omega$$,
+
+__Modeling input/output nonlinearities__
+
+Rather than writing out words, I'm just going to summarize!
 
 Input nonlinearity:
 

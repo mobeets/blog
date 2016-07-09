@@ -3,9 +3,9 @@
 
 # Site wide configuration
 
-title: Jehosafet
+title: "The *-afire Explosion"
 locale: en_US
-description: The *-afire Explosion
+description: 
 logo: bio-photo.png
 search: true
 url: http://www.jehosafet.com/blog
@@ -15,7 +15,7 @@ url: http://www.jehosafet.com/blog
 
 permalink:   /:title/
 markdown:    kramdown
-highlighter: rouge
+highlighter: pygments
 sass:
   sass_dir: _sass
   style: compressed
