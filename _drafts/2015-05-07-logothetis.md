@@ -1,3 +1,11 @@
+---
+layout: post
+title: "Logothetis"
+description: ""
+categories: talk
+tags: [neuro, talk]
+---
+
 This week in neuroscience...Well-known monkey researcher Logothetis announces after weeks (months?) of pressure from animal-rights activists that his lab will cease using monkeys in research. What looks like a victory from the public side of things really came more from a failure of public research institutions to come to his aide in the controversy. A little bit too late, a letter of support from a German institution that initially distanced itself from the controversy ("We don't even have monkeys," they said), and a call for "solidarity" amongst other monkey researchers from Peter Thiel.
 
 The controversy arose from a documentary showing apparent monkey discontent and maltreatment, taken in secret from the lab via a rogue PhD student, and aired nationally on German television. Logothetis and coworkers were since subjected to hate speech, threats, etc...

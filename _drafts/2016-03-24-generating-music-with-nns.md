@@ -3,6 +3,7 @@ layout: post
 title: "Somehow generating music with NNs"
 description: ""
 categories: articles
+tags: music
 ---
 
 I decided I wanted to understand autoencoders. I also want to generate music, so I was browsing GitXiv.
