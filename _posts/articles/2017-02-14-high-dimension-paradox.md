@@ -33,7 +33,7 @@ But something weird happens in high dimensions that you might not expect just fr
 
 <img src="{{ site.url }}/images/highd/prob_any.png" style="width: 50%;"/>
 
-This is weird: As the number of dimensions increases, the data get essentially further and further from the origin. When $$k=20$$, even if you sample $$100,000$$ points, the probability of there being _any_ data with distance less than 1 is about $$0.0017$$%. What this means is that when $$k=20$$, we're basically guaranteed that we could draw a 20-dimensional ball with radius 1 that wouldn't have _any_ data inside of it[^3]. This means a low-dimensional picture of what's going on in high-d looks more like this, conceptually:
+This is weird: As the number of dimensions increases, the data get essentially further and further from the origin. When $$k=20$$, even if you sample $$100,000$$ points, the probability of there being _any_ data with distance less than 1 is about $$0.0017$$%. What this means is that when $$k=20$$, we're basically guaranteed that we could draw a 20-dimensional ball with radius 1 that wouldn't have _any_ data inside of it[^3]. It's almost as if a low-dimensional picture of what's going on in high-d looks more like this, conceptually:
 
 <img src="{{ site.url }}/images/highd/aperture.png" style="width: 50%;"/>
 
@@ -51,6 +51,6 @@ __Notes__
 
 [^2]: The values I'm plotting are: $$ 1 - (1-F_k(1))^N) $$, for $$N = 100,000$$.
 
-[^3]: Once you have above $$k=5$$ dimensions, the volume of a k-ball does start decreasing as you add more dimensions. So you might be concerned this result just has to do with the density of points decreasing in high-d. However, we could consider different radii for our k-ball (i.e., other than $$R=1$$) to keep the density fixed, and we'd still reach a similar conclusion.
+[^3]: Once you have above $$k=5$$ dimensions, the volume of a k-ball with radius $$1$$ does start decreasing as you add more dimensions. So you might be concerned this result just has to do with the density of points decreasing in high-d. However, I tried using different radii for our k-ball to keep the density fixed, and reached a similar conclusion.
 
 [^4]: Suppose I tell you the average weight of an adult is 100 pounds. Then think about taking samples of two people ($$k=2$$). How often would you expect to find that each person's weight was within 1 pound of 100 pounds? It could happen. Now, take samples of twenty people ($$k=20$$) and ask yourself how often you'd expect to find a sample where _all twenty people_ had a weight within 1 pound of 100 pounds. Clearly, as $$k$$ increases, the chances of this happening go to zero.
