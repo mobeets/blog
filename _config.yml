@@ -8,7 +8,7 @@ locale: en_US
 description: 
 logo: bio-photo.png
 search: true
-url: http://www.jehosafet.com/blog
+url: https://mobeets.github.io/blog
 
 
 # Jekyll configuration
