@@ -1,0 +1,109 @@
+I"+<p>Let’s say I list out the following series of numbers, and you guess what comes next:</p>
+
+\[1, 6, 21, 107, ...\]
+
+<p>Surprisingly, the next item is larger than 47 million, and the number after that is greater than the number of atoms in the known universe. The seventh number in the sequence is at least as big as \(10^{10^{10^{10^{18,705,353}}}}\), while the later numbers get <em>hopelessly</em> larger. (It’s been shown that the <a href="https://www.scottaaronson.com/blog/?p=2725">8000th number</a> in the sequence can never be found using mathematics as we know it.)</p>
+
+<p>This sequence, called the <em>Busy Beaver</em> function, is a solid strategy for winning a “who can name the biggest number” competition.<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> The funny thing is, <strong>while we know how to define the numbers in this sequence, we don’t actually know how to compute them.</strong> All we know is that they are really, really big. Even the fifth number in the sequence, which we <em>think</em> is 47,176,870, isn’t yet certain. How is this possible? To explain, first we have to talk about…</p>
+
+<h2 id="turing-machines">Turing Machines</h2>
+
+<p>A Turing Machine is a sort of prototypical computer, invented by Alan Turing in 1936.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> Conceptually, a Turing Machine can “compute” anything we can write out an algorithm for: addition and multiplication, for example, but really anything we consider a “computer” to do, such as running the Windows 95 operating system, or anything your smart phone does.</p>
+
+<p>Imagine you have an infinitely long strip of paper (or “tape”) divided into squares, and each square has a different color (say, white or orange). The Turing Machine has a program that tells it how to interact with this tape. It reads one square at a time, and based on its program it decides whether to change the color of the square (e.g., make a white square orange), and whether to move next to the left or right. For example, a simple Turing Machine might have a single rule:</p>
+
+<ul>
+  <li>if input == white: output orange, move right</li>
+  <li>if input == orange: output orange, move left</li>
+</ul>
+
+<p>We might call such a rule “orange obsessed”, as the machine will always color every square it visits orange.</p>
+
+<h3 id="a-2-state-turing-machine">A 2-state Turing machine</h3>
+
+<p>A Turing Machine can actually have multiple rules, called “states”. For example, we might have a 2-state Turing Machine with an “orange obsessed” state and another completely different state. We can also give our Turing Machine an extra state (called HALT) where it can stop running. Finally, we need to specify how to transition between these states. Pseudo-code for our final 2-state Turing machine (we don’t count the HALT state) might look like this:</p>
+
+<ul>
+  <li>if state == “orange obsessed”:
+    <ul>
+      <li>if input == white: output orange, move right, state = “optimistic”</li>
+      <li>if input == orange: output orange, move left, state = “optimistic”</li>
+    </ul>
+  </li>
+  <li>if state == “optimistic”:
+    <ul>
+      <li>input == white: output orange, move left, state = “orange obsessed”</li>
+      <li>input == orange: output orange, move right, state = HALT</li>
+    </ul>
+  </li>
+</ul>
+
+<p>We’ll imagine for the sake of personification that the above machine is committed to changing every white square it encounters into an orange one. But whenever it is “optimistic” and encounters a square that is already orange, it imagines (incorrectly) that it is finished with its work, and so it halts.</p>
+
+<h3 id="counting-our-steps">Counting our steps</h3>
+
+<p>How many steps would our machine take if we ran it on a tape filled with white squares? Watch the animation below.</p>
+
+<div id="sketch-holder"></div>
+<p><button class="restart-sim">Replay</button>
+<script src="http://localhost:4000/assets/js/articles/busybeaver2.js" type="text/javascript"></script></p>
+
+<h2 id="busy-beavers">Busy Beavers</h2>
+
+<p>Not every Turing Machine will always halt. For example, some machines’ programs get them stuck in a loop, dooming them to repeat the same sequence of moves over and over again. Others simply never bother transitioning to a HALT state. In that sense, our program is a little special, because it does halt. But how special, exactly? Let’s say we considered every possible 2-state Turing Machine that <em>does</em> halt when run on a tape filled with zeros. One might wonder: <em>Which machine takes the most steps before halting?</em></p>
+
+<p>Now we can finally explain (well, somewhat) the sequence of numbers at the beginning of the post: <strong>The Busy Beaver function, \(BB(n)\), tells us the maximum number of steps a Turing Machine with \(n\) states can take before halting.</strong></p>
+
+<p>The Turing Machine we described above is in fact a 2-state busy beaver. In other words, there is no 2-state Turing Machine that runs longer than \(BB(2) = 6\) steps.</p>
+
+<h3 id="why-finding-busy-beavers-is-so-difficult">Why finding busy beavers is so difficult</h3>
+
+<p>How do we know that \(BB(2) = 6\)? To verify this, we would have to program up every possible 2-state Turing machine and run each one on an imaginary row of squares all filled with zeros. We could then check that none of the machines that <em>did</em> halt ran longer than 6 steps, confirming that \(BB(2) = 6\). To find \(BB(3)\) we might consider using a similar process. But by the time we get to \(BB(5)\), two big problems arise:</p>
+
+<ol>
+  <li>
+    <p>Even with only two states, there are already 20,736 different Turing machines to consider. If we have three states, there are 16,777,216. In general, there are \((4n + 4)^{2n}\) n-state Turing machines. That’s a <em>lot</em> of machines to run.</p>
+  </li>
+  <li>
+    <p>Remember that \(BB(n)\) is the most steps a Turing machine with \(n\) states can take <em>before</em> halting. But as Turing himself showed <sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>, there is no way to decide in general whether a machine will eventually halt or if it will run forever!</p>
+  </li>
+</ol>
+
+<p>This second problem is really the key one. Let’s say we’ve run one of our 2-state machines for 5,000 steps and it still hasn’t halted. Can we assume that it never will? Luckily, we already know that \(BB(2) &lt; 5000\), which means this machine <em>must</em> run forever. But if we <em>don’t</em> know \(BB(n)\), then we don’t know how long we have to run a machine until we can be confident that it will never stop.<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup> Another way of putting it is that to compute \(BB(n)\), you’ll have to run all of your machines at least \(BB(n)\) steps to know whether your machines will halt or not. It’s like the joke where you’re on a bus, and you ask the passenger next to you if he knows which stop to get off at for the grocery store. “Sure,” he tells you. “Just get off one stop before I do.”</p>
+
+<p>So now hopefully it’s a little clearer why we don’t even know \(BB(5)\) yet. We <em>think</em> it’s 47,176,870. But there are genuinely still some 5-state Turing machines out there being simulated on someone’s computer that have yet to halt. And we don’t yet know how to prove that they never will.</p>
+
+<!-- ## Universal Turing Machines
+
+A Turing machine is just a set of instructions to carry out given whatever state you're in, and what square you're reading. Specifically: what letter to write in the square, which direction to move in next, and which internal state to move to next. The Turing machine is placed in a starting position on a piece of tape, and each square in the tape has either a 0 or a 1 in it. The "input" is whatever you write on the tape at the start. The output is whatever the numbers are after the machine stops moving. Let $$M_1(x)$$ be the output of a particular machine, M1, when being given $$x$$.
+
+Every Turing machine can be described by some number. So what happens if you run another Turing machine, $$M_2$$, on an input that describes how to run $$M_1$$ on the input $$x$$? (Meaning something like $$M_2(y)$$, where $$y = [M_1~ x]$$.) It turns out there are in fact Turing machines that can tell you what _any_ Turing machine would return when given _any_ input. These are called "universal Turing machines."
+
+There's a universal Turing machine with only 6 states and 4 letters. The crazy thing is that this Turing machine could tell you the output of _any_ other Turing machine--even one with 1,390,233 states--applied to any input. In general the set of universal Turing machines forms a sort of frontier when plotted in letter-vs-state space.
+
+These tiny universal Turing machines give us a hint that the set of things we can "compute" is in fact quite limited. (Turing machines were in fact the first theoretical definition of what a computer even _is_.) -->
+
+<hr />
+
+<p><strong>Notes</strong></p>
+
+<ul>
+  <li>Wolfram Alpha’s Turing machine simulator is <a href="https://www.wolframalpha.com/examples/science-and-technology/computational-sciences/turing-machines/">intense</a></li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://www.scottaaronson.com/writings/bignumbers.html">“Who Can Name the Bigger Number?”</a> by Scott Aaronson. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p><a href="https://sci-hub.tw/10.1112/plms/s2-42.1.230">“On Computable Numbers, with an Application to the Entscheidungsproblem.”</a> by Alan Turing (1936) <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>In the paper where he introduces the Turing Machine, Turing shows that the “halting problem” (which is to determine whether an arbitrary Turing Machine will ever halt when given a particular input sequence), is impossible to solve with a general-purpose algorithm. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>The halting problem says that there is no algorithm that can tell us whether <em>any</em> program (e.g., a Turing machine) will halt when given a particular input. You <a href="https://wpmedia.wolfram.com/uploads/sites/13/2019/03/19-1-2.pdf"><em>can</em></a> tell whether an arbitrary 2- or 3-state Turing machine will halt. But for the other ones, we’re on our own; people have to use a mix of procedures and heuristics to decide if a program is stuck in a loop. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

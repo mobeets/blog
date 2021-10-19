@@ -3,7 +3,8 @@ layout: post
 title: "Busy Beavers"
 description: ""
 categories: articles
-tags: math
+tags: math computation
+p5js: true
 latex: true
 ---
 
@@ -19,42 +20,65 @@ This sequence, called the _Busy Beaver_ function, is a solid strategy for winnin
 
 A Turing Machine is a sort of prototypical computer, invented by Alan Turing in 1936.[^2] Conceptually, a Turing Machine can "compute" anything we can write out an algorithm for: addition and multiplication, for example, but really anything we consider a "computer" to do, such as running the Windows 95 operating system, or anything your smart phone does.
 
-Imagine you have an infinitely long strip of paper (or "tape") divided into squares, and in each square is written either a zero or a one. The Turing Machine has a program that tells it how to interact with this tape. It reads one square at a time, and based on its program it decides whether to replace the number in the square with a different one (e.g., replace a zero with a one, or vice-versa), and whether to move next to the left or right square. For example, a simple Turing Machine might have a single rule:
+Imagine you have an infinitely long strip of paper (or "tape") divided into squares, and each square has a different color (say, white or orange). The Turing Machine has a program that tells it how to interact with this tape. It reads one square at a time, and based on its program it decides whether to change the color of the square (e.g., make a white square orange), and whether to move next to the left or right. For example, a simple Turing Machine might have a single rule:
 
-- if you currently see a 0, replace it with a 1, then move to the right
-- if you currently see a 1, keep it, then move to the left
+```python
+index = 0
+while True:
+	if square_colors[index] == "white":
+		square_colors[index] = "orange"
+		index += 1 # move right
+	elif square_colors[index] == "orange":
+		square_colors[index] = "orange"
+		index -= 1 # move left
+```
 
-We might call such a rule ONE_OBSESSED, as the machine will always write a 1 in whatever square it visits.
+We might call such a rule "orange obsessed", as the machine will always color every square it visits orange.
 
 ### A 2-state Turing machine
 
-A Turing Machine can actually have multiple rules, called "states". For example, we might have a 2-state Turing Machine with a ONE_OBSESSED state and another completely different one. We can also give our Turing Machine an extra state (called HALT) where it can stop running. Finally, we need to specify how to transition between these states. Pseudo-code for our final 2-state Turing machine (we don't count the HALT state) might look like this:
+A Turing Machine can actually have multiple rules, called "states". For example, we might have a 2-state Turing Machine with an "orange obsessed" state and another completely different state. We can also give our Turing Machine an extra state (called HALT) where it can stop running. Finally, we need to specify how to transition between these states. Pseudo-code for our final 2-state Turing machine (we don't count the HALT state) might look like this:
 
-- if in the ONE_OBSESSED state:
-	- if you currently see a 0, replace it with a 1; then move to the right and become OPTIMISTIC
-	- if you currently see a 1, replace it with a 0; then move to the left and become OPTIMISTIC
-- otherwise, if in the OPTIMISTIC state:
-	- if you currently see a 0, replace it with a 1; then move to the left and become ONE_OBSESSED
-	- if you currently see a 1, keep it; then move to the right and HALT
-- if in the HALT state:
-	- quit
+```python
+index = 0
+state = "orange obsessed"
 
-We'll imagine for the sake of personification that the above machine is committed to changing every zero it encounters into a one. Most of the time, it fulfills its duty and changes every zero to a one. But whenever it is OPTIMISTIC and encounters a one, it imagines (incorrectly) that it is finished with its work, and so it halts.
+while state != "HALT":
+	if state == "orange obsessed":
+		if square_colors[index] == "white":
+			square_colors[index] = "orange"
+			index += 1 # move right
+			state = "optimistic"
+		elif square_colors[index] == "orange":
+			square_colors[index] = "orange"
+			index -= 1 # move left
+			state = "optimistic"
+	elif state == "optimistic":
+		if square_colors[index] == "white":
+			square_colors[index] = "orange"
+			index -= 1 # move left
+			state = "orange obsessed"
+		elif square_colors[index] == "orange":
+			square_colors[index] = "orange"
+			index += 1 # move right
+			state = "HALT"
+```
+
+We'll imagine for the sake of personification that the above machine is committed to changing every white square it encounters into an orange one. But whenever it is "optimistic" and encounters a square that is already orange, it imagines (incorrectly) that it is finished with its work, and so it halts.
 
 ### Counting our steps
 
-How many steps would our machine take if we ran it on a tape filled with zeros? Let's pretend we're the machine and count out our steps. We'll suppose our state is initially ONE_OBSESSED, and that we are placed on "Square 1".
+How many steps would the machine above take if we ran it on a tape filled with white squares? Watch the animation below. After that, try generating a random Turing Machine and seeing what happens.
 
-1. Square 1: First, we replace the 0 with a 1, move to the right to Square 2, and become OPTIMISTIC.
-2. Square 2: We see a 0, which we replace with a 1, and then move back to the left to Square 1 and become ONE_OBSESSED again.
-3. Square 1: Now we see a 1 again, so we keep it and move to the left, and become OPTIMISTIC.
-4. Square 0: We change the 0 to a 1, move to the right and become ONE_OBSESSED.
-5. Square 1: We see a 1 yet again, so we keep it and move to the left, and become OPTIMISTIC.
-6. Square 0: We see a 1. Optimistically, we decide that our work here is done. We now HALT.
+<div id="sketch-holder"></div>
+<button class="restart-sim">Replay</button>
+<button class="random-sim">Choose random machine</button>
+<script src="{{ site.url }}/assets/js/articles/busybeaver2.js" type="text/javascript"></script>
+<br/>
 
 ## Busy Beavers
 
-Not every Turing Machine will always halt. For example, some machines' programs get them stuck in a loop, dooming them to repeat the same sequence of moves over and over again. Others simply never bother transitioning to a HALT state. In that sense, our program is a little special, because it does halt. But how special, exactly? Let's say we considered every possible 2-state Turing Machine that _does_ halt when run on a tape filled with zeros. One might wonder: _Which machine takes the most steps before halting?_
+As you can see above by simulating random Turing Machines, not every Turing Machine will always halt. For example, some machines' programs get them stuck in a loop, dooming them to repeat the same sequence of moves over and over again. Others simply never bother transitioning to a HALT state. In that sense, our program is a little special, because it does halt. But how special, exactly? Let's say we considered every possible 2-state Turing Machine that _does_ halt when run on a tape filled with zeros. One might wonder: _Which machine takes the most steps before halting?_
 
 Now we can finally explain (well, somewhat) the sequence of numbers at the beginning of the post: __The Busy Beaver function, $$BB(n)$$, tells us the maximum number of steps a Turing Machine with $$n$$ states can take before halting.__
 
@@ -64,7 +88,7 @@ The Turing Machine we described above is in fact a 2-state busy beaver. In other
 
 How do we know that $$BB(2) = 6$$? To verify this, we would have to program up every possible 2-state Turing machine and run each one on an imaginary row of squares all filled with zeros. We could then check that none of the machines that _did_ halt ran longer than 6 steps, confirming that $$BB(2) = 6$$. To find $$BB(3)$$ we might consider using a similar process. But by the time we get to $$BB(5)$$, two big problems arise:
 
-1. Even with only two states, there are already 100,000,000 possible Turing machines to consider. In general, there are $$(4n + 4)^{2n}$$ n-state Turing machines. That's a _lot_ of machines to run.
+1. Even with only two states, there are already 20,736 different Turing machines to consider. If we have three states, there are 16,777,216. In general, there are $$(4n + 4)^{2n}$$ n-state Turing machines. That's a _lot_ of machines to run.
 
 2. Remember that $$BB(n)$$ is the most steps a Turing machine with $$n$$ states can take _before_ halting. But as Turing himself showed [^3], there is no way to decide in general whether a machine will eventually halt or if it will run forever!
 
@@ -78,7 +102,7 @@ A Turing machine is just a set of instructions to carry out given whatever state
 
 Every Turing machine can be described by some number. So what happens if you run another Turing machine, $$M_2$$, on an input that describes how to run $$M_1$$ on the input $$x$$? (Meaning something like $$M_2(y)$$, where $$y = [M_1~ x]$$.) It turns out there are in fact Turing machines that can tell you what _any_ Turing machine would return when given _any_ input. These are called "universal Turing machines."
 
-There's a universal Turing machine with only 6 states and 4 letters. The crazy this is that this Turing machine could tell you the output of _any_ other Turing machine--even one with 1,390,233 states--applied to any input. In general the set of universal Turing machines forms a sort of frontier when plotted in letter-vs-state space.
+There's a universal Turing machine with only 6 states and 4 letters. The crazy thing is that this Turing machine could tell you the output of _any_ other Turing machine--even one with 1,390,233 states--applied to any input. In general the set of universal Turing machines forms a sort of frontier when plotted in letter-vs-state space.
 
 These tiny universal Turing machines give us a hint that the set of things we can "compute" is in fact quite limited. (Turing machines were in fact the first theoretical definition of what a computer even _is_.) -->
 
@@ -96,3 +120,5 @@ __Notes__
 [^5]: ["The Busy Beaver Frontier"](https://www.scottaaronson.com/papers/bb.pdf) by Scott Aaronson
 
 [^6]: https://catonmat.net/busy-beaver
+
+- Wolfram Alpha's Turing machine simulator is [intense](https://www.wolframalpha.com/examples/science-and-technology/computational-sciences/turing-machines/)

@@ -1,0 +1,2 @@
+I",<p>Launchd is basically OSX’s version of cron, and it’s taken me years to get a launchd job actually working (not of regular effort, of course, but still). My main issue was not really knowing how to debug my plist file. Instead, all I’d see were cryptic error messages like the following:</p>
+:ET

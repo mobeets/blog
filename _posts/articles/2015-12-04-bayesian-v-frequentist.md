@@ -13,7 +13,7 @@ You're trying to estimate a parameter $$\theta$$, and someone hands you a 95% co
 
 One example of what you might be tempted to say is "I am 95% confident that the true parameter is in my confidence interval."
 
-But the statistician--the Frequentist--smugs. "The true parameter is either in your confidence interval or it isn't," he says.
+But the statistician--the Frequentist--smugs. "The true parameter is either in your confidence interval or it isn't," they say.
 
 Confusion descends. The Frequentist continues:
 
@@ -29,7 +29,6 @@ But if you're the scientist, the one constructing a confidence interval and tryi
 
 Which leads me to my simplified description of the difference between the perspectives of the Frequentist and the Bayesian.
 
-A Frequentist wants statistics to work for _everyone_, so he needs his probabilities to refer to samples taken by _different_ people. In his view the true parameter is fixed while the sampling is random. A Bayesian, on the other hand, is a little more selfish: He only wants to figure out things for himself, to update his beliefs about the data, and so it's the unknown parameter that's random--because it's unknown.
+A Frequentist wants statistics to work for _everyone_, so they need their probabilities to refer to samples taken by _different_ people. In their view the true parameter is fixed while the sampling is random. A Bayesian, on the other hand, is a little more selfish: They only want to figure out things for themselves, to update their beliefs about the data, and so it's the unknown parameter that's random--because it's unknown.
 
 It makes sense to me now why more statisticians are Frequentists while most applied scientists are Bayesians: They have opposing needs from the theory. How do you resolve this conflict? I have no idea. Both needs seem important.
-

@@ -1,0 +1,157 @@
+I"x<p><strong>Source</strong>: <a href="http://faculty.mccombs.utexas.edu/carlos.carvalho/teaching/Section4SSC389.pdf">SSC 389: AR(1) + noise</a></p>
+
+<h2 id="definitions">Definitions</h2>
+
+<ul>
+  <li>\(X_t\) is hidden state at time t</li>
+  <li>\(Y_t\) is observed state at time t</li>
+  <li>\(D_t\) is information known at time t, i.e. \( \{ Y_1, \cdots, Y_t \} \)</li>
+  <li>\(T\) is length of \(X, Y, D\)</li>
+</ul>
+
+<h2 id="model">Model</h2>
+
+<p><strong>Hidden</strong>:
+    \[ X_t = \alpha + \beta X_{t-1} + \epsilon \]</p>
+
+<ul>
+  <li>n.b. X is stationary</li>
+</ul>
+
+<p><strong>Observed</strong>:
+    \[ Y_t = X_t + v \]</p>
+
+<p>\[ v \propto N(0, \sigma^2), \epsilon \propto N(0, \omega^2) \]</p>
+
+<ul>
+  <li>\( v, \epsilon \) independent</li>
+</ul>
+
+<h2 id="the-goal">The Goal</h2>
+
+<p><strong>Goal</strong>: Describe a gibbs sampler for viewing the posterior of all unknowns given only the observed Y:
+\[ P( X, \alpha, \beta, \omega^2, \sigma^2 \mid D_T) \]</p>
+
+<ol>
+  <li>
+    <p>Draw
+\( (\alpha, \beta, \omega^2, \sigma^2) \) from
+\( P( \alpha, \beta, \omega^2, \sigma^2 \mid X, D_T) \)</p>
+  </li>
+  <li>
+    <p>Draw X from
+\( P(X \mid \alpha, \beta, \omega^2, \sigma^2, D_T) \)</p>
+  </li>
+</ol>
+
+<h3 id="step-1-ar1-without-noise">Step 1: AR(1) without noise</h3>
+
+<p>“Should be easy, right?”</p>
+
+<p>Hint: We want to sample from the posterior of the AR(1) without noise case, i.e. the posterior in bayesian linear regression of Y on X:</p>
+
+<p>\[ Y = X \theta + \epsilon \]</p>
+
+<p>where \( X = X_{0:t-1} \), \( Y = Y_{1:t} \), \( \theta = \{ \alpha, \beta \} \), and \( \epsilon \propto N(0, \sigma^2) \).</p>
+
+<p>After setting conjugate priors on your hyperparamers \( ( \theta, \sigma^2 ) \), you will need to find the full conditional distributions and then gibbs sample to draw from the posterior:</p>
+
+<p>a.</p>
+
+<p>\[ P( \theta \mid \omega^2, \sigma^2, X, Y) \]</p>
+
+<p>b.</p>
+
+<p>\[ P( \sigma^2 \mid \theta, X, Y ) \]</p>
+
+<p>And then drawing for \(\omega^2\) is similar.</p>
+
+<h3 id="step-2-ffbs">Step 2: FFBS</h3>
+
+<p>Let \( A:= \{ \alpha, \beta, \omega^2, \sigma^2 \} \)</p>
+
+<p>\( P( X \mid A, D_T) \)
+is the product of
+\( P( X_T \mid A, D_T) \)
+and
+\( P( X_t \mid X_{t+1:T}, A, D_T) \)
+for all t&lt;T</p>
+
+<p>a.</p>
+
+<p>\[ P( X_T \mid A, D_T) \propto N(m_t, C_t) \]</p>
+
+<p>b.</p>
+
+<p>\[ P( X_t \mid X_{t+1:T}, A, D_T ) \]</p>
+
+<p>\[ P( X_t \mid X_{t+1}, A, D_T ) = N(h_t, B_t) \]</p>
+
+<p>So to draw from this distribution, first we draw \( X_T \) from \( P( X_T \mid A, D_T ) \) , then for each i&lt;T we should be able to sample \( X_{T-i} \) from</p>
+
+<p>\( P( X_{T-i} \mid X_{T-i+1}, A, D_{T-i} ) \)</p>
+
+<p>giving us a draw from the joint distribution of \( P( X \mid A, D_T ) \) .</p>
+
+<h4 id="step-2a-forward-probabilities">Step 2a: Forward probabilities</h4>
+
+<p>First we want to find the posterior at the last time point T:</p>
+
+<p>\[ P( X_T \mid D_T) \propto N( m_t, C_t) \]</p>
+
+<p>What is \( (m_t, C_t) \)?</p>
+
+<p><strong>Posterior at t-1</strong>:</p>
+
+<p>\[ X_{t-1} \mid D_{t-1} \propto N( m_{t-1}, C_{t-1} ) \]</p>
+
+<ul>
+  <li>\( m_0, C_0 \) are known (?).</li>
+</ul>
+
+<p><strong>Prior at t-1</strong>:</p>
+
+<p>\[ X_t \mid D_{t-1} \propto N(a_t, R_t) \]</p>
+
+<ul>
+  <li>\( a_t := \alpha + \beta m_{t−1} \)</li>
+  <li>\( R_t := \beta^2 C_t + \omega^2 \)</li>
+</ul>
+
+<p><strong>Predictive at t-1</strong>:</p>
+
+<p>\[ Y_t \mid D_{t-1} \propto N(f_t, Q_t) \]</p>
+
+<ul>
+  <li>\( f_t := a_t \)</li>
+  <li>\( Q_t := R_t + \sigma^2 \)</li>
+</ul>
+
+<p><strong>Posterior at t</strong>:</p>
+
+<p>\[ X_t \mid D_t \propto N(m_t, C_t) \]</p>
+
+<ul>
+  <li>\( m_t := a_t + A_t e_t \)</li>
+  <li>\( C_t := R_t − R_t A_t \)</li>
+  <li>\( A_t := R_t/Q_t \)</li>
+  <li>\( e_t := y_t − f_t \)</li>
+</ul>
+
+<p>Thus to calculate \( (m_t, C_t) \) we need to calculate the forward probabilities by beginning at t=0 and going up until we get to t=T. Then we draw \( X_T \) from \( N(m_t, C_t) \).</p>
+
+<h4 id="step-2b-backward-probabilities">Step 2b: Backward probabilities</h4>
+
+<p>At this point we already know \( X_T \), so we now want to draw from \( P( X_{T-1} \mid X_T, A, D_{T-1} ) = N( h_{t-1}, B_{t-1} ) \), where:</p>
+
+<ul>
+  <li>
+    <p>\( h_{t-i} := m_{t-i} + \beta C_{t-i} / Y_{t-i+1} ( X_{t-i+1} − a_{t-i} ) \)</p>
+  </li>
+  <li>
+    <p>\( B_{t-i} := C_{t-i} − \beta^2 C_{t-i}^2 / Y_{t-i+1} \)</p>
+  </li>
+</ul>
+
+<p>We just calculated all these things in the previous step. So we simply need to start at i=T-1 and go until i=1.</p>
+:ET

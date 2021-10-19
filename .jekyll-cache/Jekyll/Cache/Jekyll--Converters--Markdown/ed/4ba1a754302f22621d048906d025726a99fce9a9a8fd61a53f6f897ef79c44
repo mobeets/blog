@@ -1,0 +1,60 @@
+I"�<p>Launchd is basically OSX’s version of cron, and it’s taken me years to get a launchd job actually working (not of regular effort, of course, but still). My main issue was not really knowing how to debug my plist file. Instead, all I’d see were cryptic error messages like the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Jan 18 01:29:27 thisbemymachine com.apple.launchd.peruser.501[268] (com.medialog.app[86862]): Exited with code: 1
+</code></pre></div></div>
+
+<p>No longer! Here is my definitive solution to getting a plist file to run with launchd.</p>
+
+<ol>
+  <li>
+    <p>First off, let’s create a dummy python file. Below, I assume this file is at <code class="highlighter-rouge">/Users/mobeets/test.py</code>. This can do something like write something to disk, or send an email–whatever you want. I also assume that this file might needs an environment variable set, like <code class="highlighter-rouge">PYTHONPATH</code>,  which I’ve set below arbitrarily to <code class="highlighter-rouge">/Users/mobeets/Box Sync/bin</code>. (Note the absense of quotations in any of the <code class="highlighter-rouge">&lt;string&gt;</code> variables below, even when the string contains a space.)</p>
+  </li>
+  <li>
+    <p>Now create the following dummy plist file (let’s call it <code class="highlighter-rouge">filename.plist</code>, where the job name is <code class="highlighter-rouge">example</code>) that runs on load.</p>
+  </li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>Label<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>example<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>ProgramArguments<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;array&gt;</span>
+            <span class="nt">&lt;string&gt;</span>python<span class="nt">&lt;/string&gt;</span>
+            <span class="nt">&lt;string&gt;</span>/Users/mobeets/test.py<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;/array&gt;</span>
+        <span class="nt">&lt;key&gt;</span>RunAtLoad<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;true/&gt;</span>
+        <span class="nt">&lt;key&gt;</span>StandardInPath<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>/tmp/test.stdin<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>StandardOutPath<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>/tmp/test.stdout<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>StandardErrorPath<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>/tmp/test.stderr<span class="nt">&lt;/string&gt;</span>
+
+        <span class="nt">&lt;key&gt;</span>EnvironmentVariables<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;dict&gt;</span>
+            <span class="nt">&lt;key&gt;</span>PYTHONPATH<span class="nt">&lt;/key&gt;</span>
+            <span class="nt">&lt;string&gt;</span>/Users/mobeets/Box Sync/bin<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;/dict&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span></code></pre></figure>
+
+<ol>
+  <li>
+    <p>Run <code class="highlighter-rouge">plutil filename.plist</code> to verify your plist file is valid.</p>
+  </li>
+  <li>
+    <p>We want to be able to continuously monitor the outputs and errors of running our plist file. Open up a terminal and run <code class="highlighter-rouge">tail -F /var/log/system.log /tmp/test.stdout /tmp/test.stderr | grep example</code>.</p>
+  </li>
+  <li>
+    <p>Now in another terminal we can load, unload, and start the job, all while monitoring the error logs to see if anything goes wrong. Load the plist file with <code class="highlighter-rouge">launchctl filename.plist</code>. Unload with <code class="highlighter-rouge">launchctl filename.plist</code>. Run with <code class="highlighter-rouge">launchctl start example</code>.</p>
+  </li>
+  <li>
+    <p>If everything works as planned, you can customize your plist file to make it do what you actually want, iterating on the above steps until everything works. <a href="http://launchd.info/">Launchd.info</a> is a great resource for figuring out how to do various things.</p>
+  </li>
+</ol>
+
+:ET

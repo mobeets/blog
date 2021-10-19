@@ -1,0 +1,52 @@
+I"�<p>As common as it is, the <a href="https://en.wikipedia.org/wiki/Central_limit_theorem">central limit theorem</a> makes a critical assumption that is easy to gloss over: the distribution you’re sampling from must have finite variance <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. The reason I think it’s easy to gloss over is that one is rarely shown examples of distributions with <em>infinite</em> variance.</p>
+
+<p>It turns out that the Cauchy distribution, Student’s t, Pareto distribution (aka the “power-law distribution”), <a href="https://en.wikipedia.org/wiki/Category:Probability_distributions_with_non-finite_variance">and more</a> all have infinite (or undefined) variance. Look at the <a href="https://en.wikipedia.org/wiki/Cauchy_distribution">Cauchy distribution</a> below:</p>
+
+<p><img style="max-width: 400px;" src="http://localhost:4000/images/cauchy.png" /></p>
+
+<p>It’s not at all obvious by eye that the variance of the distribution above is infinite <sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. When a distribution’s variance is infinite/undefined, it’s typically because there is always some small-but-not-negligible chance that you’ll sample an extraordinarily large value. This is what people mean when they say a distribution has “fat tails.” One weird property of having fat tails is that you may be no better off estimating the distribution’s mean using the mean of \(N = 100,000\) samples than with a sample of \(N = 1\). And that is certainly the opposite of what the central limit theorem claims.</p>
+
+<p>So let’s say we have \(N\) independent samples \(X_1, \ldots, X_N\) from some distribution \(P\). If the variance of \(P\) is infinite, the central limit theorem does not apply. So what can we do? Well, it turns out there is a <a href="https://archive.org/details/limitdistributio00gned_0">generalization</a> of the central limit theorem that does not require the variance of \(P\) to be finite. In this case, the sum \(\sum_{i=1}^N X_i\) converges in distribution to a <em>symmetric alpha-stable distribution</em> with parameter α, aka a <a href="https://en.wikipedia.org/wiki/Stable_distribution">stable distribution</a> <sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup>. The value of α is based on how fast the tails decay. When α ≥ 2, this is equivalent to a Gaussian distribution—in other words, we get the central limit theorem. But when α &lt; 2, we get a different distribution entirely. For example, α = 1 is a Cauchy distribution. This means that taking sums of \(N\) samples from a Cauchy distribution (shown above) will not eventually become a Gaussian…it will remain Cauchy!</p>
+
+<hr />
+
+<p><strong>Notes</strong></p>
+
+<!-- - this may sound like something easy to ignore. but it's not necessarily that uncommon!
+	- pareto distribution (power law)
+	- cauchy distribution (α=1, β=0)
+		- shows up when looking at the distribution of extreme values (e.g., "annual maximum one-day rainfalls")
+	- levy distribution (α=1/2, β=1)
+		- "The time of hitting a single point, at distance α from the starting point, by the Brownian motion"
+	- the latter two distributions are both also "stable," meaning that sums of these variables maintains the same distribution -->
+
+<!-- - the cauchy distribution has no mean _or_ variance. which is weird, because look at the picture:
+	- "the sample mean of a large sample is no better (or worse) an estimator of $$x_0$$ than any single observation from the sample."
+ -->
+
+<!-- - so what can we do when a distribution has infinite variance?
+	- there is a generalization of the CLT, which says that as long as the tail decrease by some amount, then they will converge to a stable distribution with parameter $$\alpha$$
+		- when $$\alpha \geq 2$$, we get a Gaussian
+		- when $$\alpha < 2$$, we get a different distribution!
+			- e.g., a Cauchy distribution -->
+
+<!-- References:
+
+- https://stats.stackexchange.com/questions/192652/central-limit-theorem-and-the-pareto-distribution
+- https://en.wikipedia.org/wiki/Stable_distribution
+- https://en.wikipedia.org/wiki/Pareto_distribution
+ -->
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>While it may be common in practice to assume your data comes from a distribution with finite variance, this is not always the case. For example, both stock market fluctuations and extreme weather events may have extreme events that occur more often than predicted by a Gaussian distribution. In these cases, when your variance is unbounded, the central limit theorem does not apply. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>In fact, the Cauchy distribution doesn’t have a variance <em>or</em> a mean! <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>The family of “stable” distributions are so-called because if \(X_1, \ldots, X_N\) are samples from a stable distribution with some parameters, then the sum \(\sum_{i=1}^N X_i\) also has a stable distribution. This means you can think of a stable distribution as a sort of “attractor” for sums of random variables. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

@@ -1,0 +1,2 @@
+I"<p>When fitting discrete response variables, probit regresssion seems to have some advantages over logistic regression in that you can very easily use <a href="http://en.wikipedia.org/wiki/Probit_model#Gibbs_sampling">Gibbs sampling</a> to fit your unknown parameters.</p>
+:ET
