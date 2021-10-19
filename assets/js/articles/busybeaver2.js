@@ -29,6 +29,7 @@ let state2_input0 = [colorFilled, LEFT, STATE_1];
 let state2_input1 = [colorFilled, RIGHT, HALT];
 let rules = [state1_input0, state1_input1, state2_input0, state2_input1];
 let setRandomRules = false;
+let pressedPlay = false;
 
 function loadRuleByIndex(n) {
   let rule = [];
@@ -62,12 +63,13 @@ function loadRandomMachine() {
 function setup() {
   let canvas = createCanvas(800, 200);
   canvas.parent('sketch-holder');
-  initSimulator();
+  // initSimulator();
   $('.restart-sim').click(initSimulator);
   $('.random-sim').click(loadRandomMachine);
 }
 
 function initSimulator() {
+  pressedPlay = true;
   timeOfLastStep = millis();
   curPosition = floor(nSquaresPerRow/2);
   nextPosition = curPosition;
@@ -131,6 +133,7 @@ function drawSquares(squares) {
 }
 
 function draw() {
+  if (!pressedPlay) { return; }
   clear();
   let alphaTime = min(1, (millis() - timeOfLastStep)/animateDuration);
   if (curStep == 0) { alphaTime = 1; }
