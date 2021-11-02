@@ -1,5 +1,8 @@
 let xStart = 1;
 let yStart = 1;
+let machineIndex = 0;
+let machineOrder = [];
+let nMachines;
 let squareSize = 40;
 let curStep = 0;
 let animateDuration = 500; // msec
@@ -36,7 +39,7 @@ function loadRuleByIndex(n) {
 
   let new_state = n % 3;
   n = floor(n/3);
-  let action = n % 2;
+  let action = 2*(n % 2) - 1;
   n = floor(n/2);
   let new_color = n % 2;
   return [stateColors[new_color], action, new_state];
@@ -55,8 +58,9 @@ function loadMachineByIndex(n) {
 
 function loadRandomMachine() {
   setRandomRules = true;
-  let nMachines = Math.pow(4*2 + 4, 4);
-  rules = loadMachineByIndex(Math.round(random(-0.5, nMachines+0.5)));
+  // rules = loadMachineByIndex(Math.round(random(-0.5, nMachines+0.5)));
+  rules = loadMachineByIndex(machineOrder[machineIndex]);
+  machineIndex++;
   initSimulator();
 }
 
@@ -64,6 +68,13 @@ function setup() {
   let canvas = createCanvas(800, 200);
   canvas.parent('sketch-holder');
   // initSimulator();
+  
+  nMachines = Math.pow(4*2 + 4, 4);
+  for (var i = 0; i < nMachines; i++) {
+    machineOrder.push(i);
+  }
+  shuffle(machineOrder, true);
+
   $('.restart-sim').click(initSimulator);
   $('.random-sim').click(loadRandomMachine);
 }

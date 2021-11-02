@@ -3,11 +3,11 @@
 
 # Site wide configuration
 
-title: "The *-afire Explosion"
+title: "What do you know?"
 locale: en_US
 description: 
 logo: bio-photo.png
-search: true
+search: false
 url: https://mobeets.github.io/blog
 
 
@@ -35,7 +35,7 @@ exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.
 
 # Site owner
 owner:
-  name: Jay H
+  name: Jay Hennig
   description: "Giving us its origin, which is the sphere, and where it's going, which is the tetrahedron."
   avatar: bio-photo.png
   email: 

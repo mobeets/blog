@@ -12,17 +12,17 @@ Let's say I list out the following series of numbers. Can you guess what comes n
 
 $$ 1, 6, 21, 107, ... $$
 
-Surprisingly, the next item is larger than 47 million, and the number after that is greater than the number of atoms in the known universe. The seventh number in the sequence is at least as big as $$10^{10^{10^{10^{18,705,353}}}}$$, while the later numbers get _hopelessly_ larger. (It's been shown that the [8000th number](https://www.scottaaronson.com/blog/?p=2725) in the sequence can never be found using mathematics as we know it.)
+Surprisingly, the next item is larger than 47 million, and the number after that is greater than the number of atoms in the known universe. The seventh number in the sequence is at least as big as $$10^{10^{10^{10^{18,705,353}}}}$$, while the later numbers get hopelessly larger. In fact, it's been shown that the [8000th number](https://www.scottaaronson.com/blog/?p=2725) in the sequence can never be found using mathematics as we know it.
 
 This sequence is known as the _Busy Beaver_ function. In other words, $$BB(1) = 1$$, $$BB(2) = 6$$, $$BB(3) = 21$$, and so on. (If for whatever reason you find yourself in a "who can name the biggest number" competition [^1], writing something like $$BB(10)$$ is probably a good place to start.)
 
-Weirdly enough, while we know how to _define_ the numbers in this sequence, __we don't actually know how to compute them__ (for any $$n > 4$$). All we know is that the numbers in this sequence get really, really big. Even the fifth number, $$BB(5)$$, which we _think_ is 47,176,870, isn't yet certain. How is this possible? To explain, first we have to talk about...
+Weirdly enough, while we know how to _define_ this sequence, __we don't actually know how to compute $$BB(n)$$ for any $$n > 4$$__. Even the fifth number, $$BB(5)$$, which we _think_ is 47,176,870, isn't yet certain. How is this possible? To explain, first we have to talk about...
 
 ## Turing machines
 
 A Turing machine is a sort of prototypical computer, invented by Alan Turing in 1936.[^2] Conceptually, a Turing machine can "compute" anything we can write out an algorithm for. This includes things like addition and multiplication, for example, but also anything we consider a "computer" to do, like running the Windows 95 operating system, or anything your smart phone does.
 
-To understand what a Turing machine is, imagine you have an infinitely long strip of paper (or "tape") divided into squares, and each square has a different color (say, white or orange). We'll assume for now that initially, the squares are all white:
+To understand what a Turing machine is, imagine you have an infinitely long strip of paper (or "tape") divided into squares, and each square has a different color (say, white or orange). We'll assume for now that initially, the squares are all white. In pseudo-code, let's write this as follows:
 
 
 ```python
@@ -32,7 +32,7 @@ square_colors = ["white", "white", ..., "white"]
 A Turing machine has a program that tells it how to interact with this tape. It reads one square at a time, and based on its program it decides whether to change the color of the square (e.g., make a white square orange), and whether to move next to the left or right. For example, consider the Turing machine below:
 
 ```python
-position = 5 # random start position
+position = 5 # arbitrary start position
 while True:
 	if square_colors[position] == "white":
 		square_colors[position] = "orange"
@@ -46,11 +46,11 @@ We might call such a program "orange obsessed", as the machine will color every 
 
 ### A 2-state Turing machine
 
-A Turing machine can have multiple rules, called "states". For example, the program above has a single state that we called "orange obsessed." But we could also have a 2-state Turing machine with an "orange obsessed" state and another completely different state, along with instructions for how to transition between these states. We can also give our Turing machine an extra state (called HALT) which tells it when to stop running. Pseudo-code for our final 2-state Turing machine might look like this:
+A Turing machine can have multiple rules, called "states". For example, the program above has a single state that we called "orange obsessed." To make a 2-state Turing machine, let's take our "orange obsessed" state along with another completely different state, plus some instructions for how to transition between our two states. We will also give our Turing machine an extra state (called HALT) which tells it when to stop running. Pseudo-code for our final 2-state Turing machine might look like this:
 
 ```python
 square_colors = ["white", "white", ..., "white"]
-position = 5 # random start position
+position = 5 # arbitrary start position
 state = "orange obsessed" # initial state
 
 while state != "HALT":
@@ -74,31 +74,31 @@ while state != "HALT":
 			state = "HALT"
 ```
 
-For the sake of personification, we can imagine that the above machine is committed to changing every white square it encounters into an orange one. But whenever it is "optimistic" and it encounters a square that is already orange, it guesses (incorrectly) that it is finished with its work, and so it halts.
+For the sake of personification, we can imagine that the above machine is committed to changing every white square it encounters into an orange one. When it turns a white square orange, it becomes "optimistic." If it then encounters another orange square, it optimistically assumes that it must be finished with its work, and so it halts.
 
 ### Counting our steps
 
-What happens if we run the machine above on a tape filled with white squares? Play the animation below to find out. (The black circle indicates which square the machine is currently reading.) After that, try generating a random Turing machine and seeing what happens.
+What happens if we run the machine above on a tape filled with white squares? Play the animation below to see a simulation of this process. (The black circle indicates which square the machine is currently reading.) After you do that, click the button that says "Play next machine" to simulate one of the 20,736 different possible 2-state Turing machines.
 
 <div id="sketch-holder"></div>
 <button class="restart-sim">Play</button>
-<button class="random-sim">Choose random machine</button>
+<button class="random-sim">Play next machine</button>
 <script src="{{ site.url }}/assets/js/articles/busybeaver2.js" type="text/javascript"></script>
 <br/>
 
 ## Busy Beavers
 
-As you can see above by simulating random Turing machines, not every Turing machine will always halt. For example, some machines' programs get them stuck in a loop, dooming them to repeat the same sequence of moves over and over again. Others simply never bother transitioning to a HALT state. In that sense, the program we described above is a little special, because it does halt. But how special, exactly? Let's say we considered every possible 2-state Turing machine that _does_ halt when run on an empty tape. One might wonder: _Which machine takes the most steps before halting?_
+As you might have noticed above when simulating random Turing machines, not every Turing machine will always halt. For example, some machines' programs get them stuck in a loop, dooming them to repeat the same sequence of moves over and over again. Others simply never bother transitioning to a HALT state. In that sense, the program we described above is a little special, because it does halt. But how special, exactly? Let's say we considered every possible 2-state Turing machine that _does_ halt when run on an empty tape. One might wonder: _Which machine takes the most steps before halting?_
 
 Now we can finally explain (well, somewhat) the sequence of numbers at the beginning of the post: __The Busy Beaver function, $$BB(n)$$, tells us the maximum number of steps a Turing machine with $$n$$ states can take before halting.__
 
-The Turing machine we described above is in fact a 2-state busy beaver. In other words, there is no 2-state Turing machine that runs longer than $$BB(2) = 6$$ steps.
+The Turing machine we described above is in fact a 2-state busy beaver. In other words, there is no 2-state Turing machine that runs longer than $$BB(2) = 6$$ steps. If you don't believe me, try pressing the button above 20,736 different times and see for yourself :)
 
 ### Why finding busy beavers is so difficult
 
-How do we know that $$BB(2) = 6$$? To verify this, we would have to simulate every possible 2-state Turing machine and run each one on an imaginary row of empty squares. We could then check that none of the machines that _did_ halt ran longer than 6 steps, confirming that $$BB(2) = 6$$. To find $$BB(3)$$ and $$BB(4)$$ we might consider using a similar process. But by the time we get to $$BB(5)$$, two big problems arise:
+How do we know that $$BB(2) = 6$$? To verify this, we must simulate every possible 2-state Turing machine and run each one on an imaginary row of empty squares. We could then check that none of the machines that _did_ halt ran longer than 6 steps, confirming that $$BB(2) = 6$$. To find $$BB(3)$$ and $$BB(4)$$ we might consider using a similar process. But by the time we get to $$BB(5)$$, two big problems arise:[^7]
 
-1. Even with only two states, there are already 20,736 different Turing machines to consider. If we have three states, there are 16,777,216. In general, there are $$(4n + 4)^{2n}$$ n-state Turing machines. That's a _lot_ of machines to run.
+1. As I mentioned, there are 20,736 different 2-state Turing machines to consider. In general, there are $$(4n + 4)^{2n}$$ n-state Turing machines. That means for $$n=5$$, there are more than 63 trillion different machines to run.
 
 2. Remember that $$BB(n)$$ is the most steps a Turing machine with $$n$$ states can take _before_ halting. But as Turing himself showed [^3], there is no way to decide in general whether a machine will eventually halt or if it will run forever!
 
@@ -117,9 +117,9 @@ There's a universal Turing machine with only 6 states and 4 letters. The crazy t
 These tiny universal Turing machines give us a hint that the set of things we can "compute" is in fact quite limited. (Turing machines were in fact the first theoretical definition of what a computer even _is_.) -->
 
 <hr>
-__Notes__
+__Notes and links__
 
-[^1]: ["Who Can Name the Bigger Number?"](https://www.scottaaronson.com/writings/bignumbers.html) by Scott Aaronson.
+[^1]: ["Who Can Name the Bigger Number?"](https://www.scottaaronson.com/writings/bignumbers.html) by Scott Aaronson is a fantastic read.
 
 [^2]: ["On Computable Numbers, with an Application to the Entscheidungsproblem."](https://sci-hub.tw/10.1112/plms/s2-42.1.230) by Alan Turing (1936)
 
@@ -129,6 +129,6 @@ __Notes__
 
 [^5]: ["The Busy Beaver Frontier"](https://www.scottaaronson.com/papers/bb.pdf) by Scott Aaronson
 
-[^6]: https://catonmat.net/busy-beaver
+- [Fun visualizations](https://catonmat.net/busy-beaver) of Turing Machines
 
 - Wolfram Alpha's Turing machine simulator is [intense](https://www.wolframalpha.com/examples/science-and-technology/computational-sciences/turing-machines/)

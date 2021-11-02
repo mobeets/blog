@@ -9,7 +9,7 @@
 		    {% endif %}
 		    <li><a href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank"{% endif %}>{{ link.title }}</a></li>
 		  {% endfor %}
-        <!--{% if site.search %}<li class="dosearch"><span><i class="fa fa-search"></i> Search</span></li>{% endif %}-->
+        {% if site.search %}<li class="dosearch"><span><i class="fa fa-search"></i> Search</span></li>{% endif %}
 	    </ul>
 	</nav>
 </div><!-- /.navigation-wrapper -->
@@ -21,17 +21,17 @@
 {% if page.image.feature %}<header class="masthead">
 	{% if site.logo != null %}
 		<div class="wrap">
-			<a href="{{ site.url }}" class="site-logo" rel="home" title="{{ site.title }}"><img src="{{ site.url }}/images/{{ site.logo }}" width="200" height="200" alt="{{ site.title }} logo" class="animated bounceInDown"></a>
+			<a href="{{ site.url }}" class="site-logo" rel="home" title="{{ site.title }}"><img src="{{ site.url }}/images/{{ site.logo }}" width="100" height="100" alt="{{ site.title }} logo" class="animated bounceInDown"></a>
 		</div>
 	{% endif %}
 </header><!-- /.masthead -->
 {% else %}<header class="masthead">
 	<div class="wrap">
         {% if site.logo != null and page.layout != 'post' %}
-    		<a href="{{ site.url }}" class="site-logo" rel="home" title="{{ site.title }}"><img src="{{ site.url }}/images/{{ site.logo }}" width="200" height="200" alt="{{ site.title }} logo" class="animated fadeInUp"></a>
+    		<a href="{{ site.url }}" class="site-logo" rel="home" title="{{ site.title }}"><img src="{{ site.url }}/images/{{ site.logo }}" width="100" height="100" alt="{{ site.title }} logo" class="animated fadeInUp"></a>
         {% endif %}
-        <h1 class="site-title"><a href="{{ site.url }}">{{ site.title }}</a></h1>
-		<h2 class="site-description" itemprop="description">{{ site.description }}</h2>
+        <!-- <h1 class="site-title"><a href="{{ site.url }}">{{ site.title }}</a></h1> -->
+		<!-- <h2 class="site-description" itemprop="description">{{ site.description }}</h2> -->
 	</div>
 </header><!-- /.masthead -->{% endif %}
 
