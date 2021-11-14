@@ -6,6 +6,8 @@ categories: articles
 tags: math computation
 p5js: true
 latex: true
+image:
+    thumb: "busy-beaver.png"
 ---
 
 Let's say I list out the following series of numbers. Can you guess what comes next?
