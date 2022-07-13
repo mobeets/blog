@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Why musical tuning must be either inconsistent or out of tune"
+title: "Why every piano is either inconsistent or out of tune"
 description: ""
 categories: articles
 tags: music math
@@ -9,7 +9,7 @@ latex: true
 
 In music, why do some pairs of notes sound good when played together, while others sound dissonant? One common explanation is that two notes sound good when played together if their frequencies are in simple integer relationships. For example, a perfect fifth occurs when two frequencies with a ratio of 3:2 are played together, while an octave is the ratio of 2:1.
 
-Surprisingly, when you try to extend this theory of "simple integer relationships = sounds good" beyond pairs of notes, it falls flat entirely. Below I'll explain why this happens, and how the present-day approach to musical tuning involves most of our notes being slightly out of tune.
+Surprisingly, when you try to extend this theory of "simple integer relationships = sounds good" beyond pairs of notes, it falls apart entirely. Below I'll explain why this happens, and how the present-day approach to musical tuning involves most of our notes being slightly out of tune.
 
 ### How to tune your piano like a Pythagorean
 
