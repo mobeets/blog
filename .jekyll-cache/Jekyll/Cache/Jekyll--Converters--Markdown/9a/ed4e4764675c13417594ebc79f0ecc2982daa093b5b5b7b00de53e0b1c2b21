@@ -1,4 +1,5 @@
-I"�<h3 id="1-write-unit-tests">1. Write unit tests.</h3>
+I"
+<h3 id="1-write-unit-tests">1. Write unit tests.</h3>
 
 <p>If you’re writing your own regression code, writing and regularly running <a href="http://en.wikipedia.org/wiki/Unit_testing">unit tests</a> will prevent much pain in the future. Simply getting <em>an</em> answer for your regression means nothing–you want the correct answer. Unit tests will give yourself and others evidence to believe your resulting fits, and writing them takes no time at all.</p>
 
@@ -19,13 +20,13 @@
 
 <h4 id="use-least-squares">Use least squares</h4>
 
-<p>In python, for example, this means never calling <code class="highlighter-rouge">np.linalg.inv()</code> on a matrix unless you have to. Instead, use <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq">least squares</a> (<code class="highlighter-rouge">np.linalg.solve()</code> or <code class="highlighter-rouge">np.linalg.lstsq()</code>).</p>
+<p>In python, for example, this means never calling <code class="language-plaintext highlighter-rouge">np.linalg.inv()</code> on a matrix unless you have to. Instead, use <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.lstsq.html#numpy.linalg.lstsq">least squares</a> (<code class="language-plaintext highlighter-rouge">np.linalg.solve()</code> or <code class="language-plaintext highlighter-rouge">np.linalg.lstsq()</code>).</p>
 
 <p>Examples:</p>
 
 <ul>
-  <li>\(A^{-1} b \rightarrow\) <code class="highlighter-rouge">np.linalg.lstsq(A, b)[0]</code></li>
-  <li>\(b A^{-1} \rightarrow\) <code class="highlighter-rouge">np.linalg.lstsq(A.T, b.T)[0].T</code></li>
+  <li>\(A^{-1} b \rightarrow\) <code class="language-plaintext highlighter-rouge">np.linalg.lstsq(A, b)[0]</code></li>
+  <li>\(b A^{-1} \rightarrow\) <code class="language-plaintext highlighter-rouge">np.linalg.lstsq(A.T, b.T)[0].T</code></li>
 </ul>
 
 <h4 id="use-the-woodbury-identity">Use the Woodbury identity</h4>
@@ -44,7 +45,7 @@
 
 <p>Sometimes the above tricks won’t apply, but you still need to invert \(C\). Then guess what else sucks? Sometimes \(C\) will be singular, meaning it is un-invertible. In this case, you can use a similar approach to <a href="http://en.wikipedia.org/wiki/Principal_component_regression">principal components regression</a> (aka PC regression, or PCR) to find a rank-k approximation of \(C\).</p>
 
-<p>Let \(C = U S U^T\). (You can get \(U, S\) from calling <code class="highlighter-rouge">svd(C)</code> in python or MATLAB.) \(S\) contains your eigenvalues, and to get your rank-k approximation of \(C\) you will take the first \(k\) largest eigenvalues in \(S\) and ignore all of the others. Now, let \(U = U_k\) be the matrix where you take the \(k\) columns of \(U\) corresponding to those \(k\) largest eigenvalues. (\(U\) will be \(n \times n\), so \(k &lt; n\).)</p>
+<p>Let \(C = U S U^T\). (You can get \(U, S\) from calling <code class="language-plaintext highlighter-rouge">svd(C)</code> in python or MATLAB.) \(S\) contains your eigenvalues, and to get your rank-k approximation of \(C\) you will take the first \(k\) largest eigenvalues in \(S\) and ignore all of the others. Now, let \(U = U_k\) be the matrix where you take the \(k\) columns of \(U\) corresponding to those \(k\) largest eigenvalues. (\(U\) will be \(n \times n\), so \(k &lt; n\).)</p>
 
 <p>Your rank-k approximation of \(C\) is now \(C_k = U_k^T C U_k\), which will be a \(k \times k\) matrix. Hooray! Now if you have any other matrices or vectors with dimension \(n\) you should also multiply them by \(U_k\), or \(U_k^T\)–treat these like puzzle pieces and just play with the shapes until you turn the \(n\) into \(k\).</p>
 

@@ -1,16 +1,16 @@
-I"�<p>Launchd is basically OSX’s version of cron, and it’s taken me years to get a launchd job actually working (not of regular effort, of course, but still). My main issue was not really knowing how to debug my plist file. Instead, all I’d see were cryptic error messages like the following:</p>
+I"�<p>Launchd is basically OSX’s version of cron, and it’s taken me years to get a launchd job actually working (not of regular effort, of course, but still). My main issue was not really knowing how to debug my plist file. Instead, all I’d see were cryptic error messages like the following:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Jan 18 01:29:27 thisbemymachine com.apple.launchd.peruser.501[268] (com.medialog.app[86862]): Exited with code: 1
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Jan 18 01:29:27 thisbemymachine com.apple.launchd.peruser.501[268] (com.medialog.app[86862]): Exited with code: 1
 </code></pre></div></div>
 
 <p>No longer! Here is my definitive solution to getting a plist file to run with launchd.</p>
 
 <ol>
   <li>
-    <p>First off, let’s create a dummy python file. Below, I assume this file is at <code class="highlighter-rouge">/Users/mobeets/test.py</code>. This can do something like write something to disk, or send an email–whatever you want. I also assume that this file might needs an environment variable set, like <code class="highlighter-rouge">PYTHONPATH</code>,  which I’ve set below arbitrarily to <code class="highlighter-rouge">/Users/mobeets/Box Sync/bin</code>. (Note the absense of quotations in any of the <code class="highlighter-rouge">&lt;string&gt;</code> variables below, even when the string contains a space.)</p>
+    <p>First off, let’s create a dummy python file. Below, I assume this file is at <code class="language-plaintext highlighter-rouge">/Users/mobeets/test.py</code>. This can do something like write something to disk, or send an email–whatever you want. I also assume that this file might needs an environment variable set, like <code class="language-plaintext highlighter-rouge">PYTHONPATH</code>,  which I’ve set below arbitrarily to <code class="language-plaintext highlighter-rouge">/Users/mobeets/Box Sync/bin</code>. (Note the absense of quotations in any of the <code class="language-plaintext highlighter-rouge">&lt;string&gt;</code> variables below, even when the string contains a space.)</p>
   </li>
   <li>
-    <p>Now create the following dummy plist file (let’s call it <code class="highlighter-rouge">filename.plist</code>, where the job name is <code class="highlighter-rouge">example</code>) that runs on load.</p>
+    <p>Now create the following dummy plist file (let’s call it <code class="language-plaintext highlighter-rouge">filename.plist</code>, where the job name is <code class="language-plaintext highlighter-rouge">example</code>) that runs on load.</p>
   </li>
 </ol>
 
@@ -44,13 +44,13 @@
 
 <ol>
   <li>
-    <p>Run <code class="highlighter-rouge">plutil filename.plist</code> to verify your plist file is valid.</p>
+    <p>Run <code class="language-plaintext highlighter-rouge">plutil filename.plist</code> to verify your plist file is valid.</p>
   </li>
   <li>
-    <p>We want to be able to continuously monitor the outputs and errors of running our plist file. Open up a terminal and run <code class="highlighter-rouge">tail -F /var/log/system.log /tmp/test.stdout /tmp/test.stderr | grep example</code>.</p>
+    <p>We want to be able to continuously monitor the outputs and errors of running our plist file. Open up a terminal and run <code class="language-plaintext highlighter-rouge">tail -F /var/log/system.log /tmp/test.stdout /tmp/test.stderr | grep example</code>.</p>
   </li>
   <li>
-    <p>Now in another terminal we can load, unload, and start the job, all while monitoring the error logs to see if anything goes wrong. Load the plist file with <code class="highlighter-rouge">launchctl filename.plist</code>. Unload with <code class="highlighter-rouge">launchctl filename.plist</code>. Run with <code class="highlighter-rouge">launchctl start example</code>.</p>
+    <p>Now in another terminal we can load, unload, and start the job, all while monitoring the error logs to see if anything goes wrong. Load the plist file with <code class="language-plaintext highlighter-rouge">launchctl filename.plist</code>. Unload with <code class="language-plaintext highlighter-rouge">launchctl filename.plist</code>. Run with <code class="language-plaintext highlighter-rouge">launchctl start example</code>.</p>
   </li>
   <li>
     <p>If everything works as planned, you can customize your plist file to make it do what you actually want, iterating on the above steps until everything works. <a href="http://launchd.info/">Launchd.info</a> is a great resource for figuring out how to do various things.</p>
