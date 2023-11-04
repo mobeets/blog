@@ -98,7 +98,7 @@ The Turing machine we described above is in fact a 2-state busy beaver. In other
 
 ### Why finding busy beavers is so difficult
 
-How do we know that $$BB(2) = 6$$? To verify this, we must simulate every possible 2-state Turing machine and run each one on an imaginary row of empty squares. We could then check that none of the machines that _did_ halt ran longer than 6 steps, confirming that $$BB(2) = 6$$. To find $$BB(3)$$ and $$BB(4)$$ we might consider using a similar process. But by the time we get to $$BB(5)$$, two big problems arise:[^7]
+How do we know that $$BB(2) = 6$$? To verify this, we must simulate every possible 2-state Turing machine and run each one on an imaginary row of empty squares. We could then check that none of the machines that _did_ halt ran longer than 6 steps, confirming that $$BB(2) = 6$$. To find $$BB(3)$$ and $$BB(4)$$ we might consider using a similar process. But by the time we get to $$BB(5)$$, two big problems arise:
 
 1. As I mentioned, there are 20,736 different 2-state Turing machines to consider. In general, there are $$(4n + 4)^{2n}$$ n-state Turing machines. That means for $$n=5$$, there are more than 63 trillion different machines to run.
 
