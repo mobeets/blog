@@ -94,7 +94,7 @@ As you might have noticed above when simulating random Turing machines, not ever
 
 Now we can finally explain (well, somewhat) the sequence of numbers at the beginning of the post: __The Busy Beaver function, $$BB(n)$$, tells us the maximum number of steps a Turing machine with $$n$$ states can take before halting.__
 
-The Turing machine we described above is in fact a 2-state busy beaver. In other words, there is no 2-state Turing machine that runs longer than $$BB(2) = 6$$ steps. If you don't believe me, try pressing the button above 20,736 different times and see for yourself :)
+The Turing machine we described above is in fact a 2-state busy beaver. In other words, there is no 2-state Turing machine that halts after running for more than $$BB(2) = 6$$ steps. If you don't believe me, try pressing the button above 20,736 different times and see for yourself :)
 
 ### Why finding busy beavers is so difficult
 
